@@ -1,0 +1,13 @@
+<% flash.each do |name, msg| %>
+<script type="text/javascript">
+  $("body").removeAttr('class').addClass("top-center-fullwidth");
+  $.toast({
+        text: '<%= msg %>',
+        position: 'top-center',
+        loaderBg:'#3cb878',
+        icon: '<%= name %>',
+        hideAfter: 3500,
+        stack: 6
+      });
+</script>
+<% end %>
