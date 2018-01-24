@@ -1,4 +1,406 @@
-<% content_for :bottom do %>
+<% content_for :head do %>
+  <!-- Morris Charts CSS -->
+  <link href="vendors/bower_components/morris.js/morris.css" rel="stylesheet" type="text/css"/>
+  <!-- Data table CSS -->
+  <link href="vendors/bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+  <link href="vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet" type="text/css">
 <% end %>
 
-<%= link_to 'Logout', logout_path, method: :delete %>
+<% content_for :bottom do %>
+  <!-- Data table JavaScript -->
+  <script src="vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+
+  <!-- Slimscroll JavaScript -->
+  <script src="dist/js/jquery.slimscroll.js"></script>
+
+  <!-- simpleWeather JavaScript -->
+  <script src="vendors/bower_components/moment/min/moment.min.js"></script>
+  <script src="vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
+  <script src="dist/js/simpleweather-data.js"></script>
+
+  <!-- Progressbar Animation JavaScript -->
+  <script src="vendors/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+  <script src="vendors/bower_components/Counter-Up/jquery.counterup.min.js"></script>
+
+  <!-- Fancy Dropdown JS -->
+  <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+
+  <!-- Sparkline JavaScript -->
+  <script src="vendors/jquery.sparkline/dist/jquery.sparkline.min.js"></script>
+
+  <!-- ChartJS JavaScript -->
+  <script src="vendors/chart.js/Chart.min.js"></script>
+
+  <!-- Morris Charts JavaScript -->
+  <script src="vendors/bower_components/raphael/raphael.min.js"></script>
+  <script src="vendors/bower_components/morris.js/morris.min.js"></script>
+  <script src="dist/js/morris-data.js"></script>
+
+<% end %>
+
+<div class="wrapper">
+	<%= render 'layouts/topnav' %>
+  <%= render 'layouts/sidebar-left' %>
+  <%= render 'layouts/sidebar-right' %>
+	
+
+    <!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+		<!-- Title -->
+		<div class="row heading-bg  bg-red">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-light">analytical</h5>
+			</div>
+			<!-- Breadcrumb -->
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+				<ol class="breadcrumb">
+					<li><a href="index.html">Dashboard</a></li>
+					<li><a href="#"><span>dashboard</span></a></li>
+					<li class="active"><span>analytical</span></li>
+				</ol>
+			</div>
+			<!-- /Breadcrumb -->
+		</div>
+		<!-- /Title -->
+
+		<!-- Row -->
+		<div class="row">
+			<div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-left">
+							<h6 class="panel-title txt-dark">Conversion Rate</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="sm-graph-box">
+								<div class="row">
+									<div class="col-xs-6">
+										<div id="sparkline_1"></div>
+									</div>
+									<div class="col-xs-6">
+										<div class="counter-wrap text-right">
+											<span class="counter-cap"><i class="fa  fa-level-up txt-success"></i></span><span class="counter">23</span><span>%</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">Total Visits</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="sm-graph-box">
+									<div class="row">
+										<div class="col-xs-6">
+											<div id="sparkline_2"></div>
+										</div>
+										<div class="col-xs-6">
+											<div class="counter-wrap text-right">
+												<span class="counter-cap"><i class="fa  fa-level-up txt-success"></i></span><span class="counter">12</span><span>m</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">downloads</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="sm-graph-box">
+									<div class="row">
+										<div class="col-xs-6">
+											<div id="sparkline_6"></div>
+										</div>
+										<div class="col-xs-6">
+											<div class="counter-wrap text-right">
+												<span class="counter-cap"><i class="fa  fa-level-down txt-danger"></i></span><span class="counter">1122</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+			</div>
+			<div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-left">
+							<h6 class="panel-title txt-dark"><i class="icon-share mr-10"></i>Visits Conversion</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+							<canvas id="chart_1" height="417"></canvas>
+						</div>
+                        </div>
+                    </div>
+			</div>
+		</div>
+		<!-- /Row -->
+
+		<div class="row">
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-primary card-view">
+					<div class="panel-heading mb-20">
+						<div class="pull-left">
+							<h6 class="panel-title txt-light">top countries</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="table-wrap">
+								<div class="table-responsive">
+									<table  class="table  top-countries" >
+										<tbody>
+											<tr>
+												<td>
+													<img src="dist/img/country/gb.svg" alt="user_img">
+												</td>
+												<td>
+													United Kingdom
+												</td>
+												<td>
+													$50
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<img src="dist/img/country/my.svg" alt="user_img">
+												</td>
+												<td>
+													Malaysia
+												</td>
+												<td>
+													$20
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<img src="dist/img/country/au.svg" alt="user_img">
+												</td>
+												<td>
+													Australia
+												</td>
+												<td>
+													$5
+												</td>
+											</tr>
+
+											<tr>
+												<td>
+													<img src="dist/img/country/us.svg" alt="user_img">
+												</td>
+												<td>
+													United States
+												</td>
+												<td>
+													$5
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-left">
+							<h6 class="panel-title txt-dark"><i class="icon-pie-chart mr-10"></i>Impressions</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<canvas id="chart_6" height="280"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-12">
+                    <div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-left">
+							<h6 class="panel-title txt-dark"><i class="icon-clock mr-10"></i>Average Position</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div id="morris_extra_line_chart" class="morris-chart" style="height:280px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Row -->
+		<div class="row">
+			<div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+				<div class="panel panel-default card-view pa-0">
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body pa-0">
+							<div class="sm-data-box bg-green">
+								<div class="row ma-0">
+									<div class="col-xs-5 text-center pa-0 icon-wrap-left">
+										<i class="icon-diamond txt-light"></i>
+									</div>
+									<div class="col-xs-7 text-center data-wrap-right">
+										<h6 class="txt-light">monthly sales</h6>
+										<span class="txt-light counter counter-anim">45678</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="weather_3" class="panel panel-default card-view pa-0 weather-info">
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body pa-0">
+							<div class="row ma-0">
+								<div class="col-xs-6 pa-0">
+									<div class="left-block-wrap pa-30">
+										<p class="block nowday"></p>
+										<span class="block nowdate"></span>
+										<div class="left-block  mt-15"></div>
+									</div>
+								</div>
+								<div class="col-xs-6 pa-0">
+									<div class="right-block-wrap pa-30">
+										<div class="right-block"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-left">
+							<h6 class="panel-title txt-dark">statement table</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="table-wrap">
+								<div class="table-responsive">
+									<table class="table display product-overview" id="statement">
+										<thead>
+											<tr>
+												<th>date</th>
+												<th>Order ID</th>
+												<th>type</th>
+												<th>Details</th>
+												<th>price</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>10-7-2016</td>
+												<td>#85457898</td>
+												<td>
+													<span class="label label-primary font-weight-100">fee</span>
+												</td>
+												<td>
+													Author Fee for included support sale IVIP13444036
+												</td>
+												<td>$20</td>
+											</tr>
+											<tr>
+												<td>10-7-2016</td>
+												<td>#85457897</td>
+												<td>
+													<span class="label label-danger font-weight-100">refund</span>
+												</td>
+												<td>
+													Author Fee for included support sale IVIP13444036
+												</td>
+												<td>$20</td>
+											</tr>
+											<tr>
+												<td>10-7-2016</td>
+												<td>#85457896</td>
+												<td>
+													<span class="label label-primary font-weight-100">fee</span>
+												</td>
+												<td>
+													Author Fee for included support sale IVIP13444036
+												</td>
+												<td>$20</td>
+											</tr>
+											<tr>
+												<td>10-7-2016</td>
+												<td>#85457895</td>
+												<td>
+													<span class="label label-info font-weight-100">support</span>
+												</td>
+												<td>
+													Author Fee for included support sale IVIP13444036
+												</td>
+												<td>$20</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Row -->
+	</div>
+	<!-- Footer -->
+	<footer class="footer container-fluid pl-30 pr-30">
+		<div class="row">
+			<div class="col-sm-5">
+				<a href="index.html" class="brand mr-30"><img src="dist/img/logo-sm.png" alt="logo"/></a>
+				<ul class="footer-link nav navbar-nav">
+					<li class="logo-footer"><a href="#">help</a></li>
+					<li class="logo-footer"><a href="#">terms</a></li>
+					<li class="logo-footer"><a href="#">privacy</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-7 text-right">
+				<p>2016 &copy; Kenny. Pampered by Hencework</p>
+			</div>
+		</div>
+	</footer>
+	<!-- /Footer -->
+
+</div>
+    <!-- /Main Content -->
+
+</div>
+<!-- /#wrapper -->

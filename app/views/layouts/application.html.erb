@@ -23,20 +23,12 @@
 			<div class="la-anim-1"></div>
 		</div>
 		<!--/Preloader-->
-
-
 		<div class="wrapper pa-0">
-			<%= render 'layouts/messages' %>
 			<!-- Main Content -->
-			<div class="page-wrapper pa-0 ma-0">
-				<div class="container-fluid">
-					<%= yield %>
-				</div>
-
-			</div>
+			<%= yield %>
 			<!-- /Main Content -->
-
 		</div>
+		<%= render 'layouts/messages' %>
 		<!-- /#wrapper -->
 
 		<!-- JavaScript -->
