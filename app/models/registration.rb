@@ -32,10 +32,8 @@ class Registration < Parse::Object
 
   # potential score
   property :potentialScore, :float, default: lambda { |x|
-    score = 1
-    if x.hasVisa?
-      score = 2
-    end
+    score = 0
+    score += 1 if x.hasVisa?
     return score * (x.scrolled * x.readingTime)
   }
 
