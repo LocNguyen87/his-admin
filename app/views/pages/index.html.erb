@@ -36,13 +36,14 @@
   <script src="vendors/bower_components/morris.js/morris.min.js"></script>
   <script src="dist/js/morris-data.js"></script>
 
+  <script src="dist/js/dashboard-data.js"></script>
 <% end %>
 
 <div class="wrapper">
 	<%= render 'layouts/topnav' %>
   <%= render 'layouts/sidebar-left' %>
   <%= render 'layouts/sidebar-right' %>
-	
+
 
     <!-- Main Content -->
 <div class="page-wrapper">
@@ -64,6 +65,96 @@
 			<!-- /Breadcrumb -->
 		</div>
 		<!-- /Title -->
+
+    <!-- Row -->
+		<div class="row">
+			<div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+				<div class="panel panel-default card-view pa-0">
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body pa-0">
+							<div class="sm-data-box bg-green">
+								<div class="row ma-0">
+									<div class="col-xs-5 text-center pa-0 icon-wrap-left">
+										<i class="icon-diamond txt-light"></i>
+									</div>
+									<div class="col-xs-7 text-center data-wrap-right">
+										<h6 class="txt-light">Registrations</h6>
+										<span class="txt-light counter counter-anim"><%= @registrations.count %></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="weather_3" class="panel panel-default card-view pa-0 weather-info">
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body pa-0">
+							<div class="row ma-0">
+								<div class="col-xs-6 pa-0">
+									<div class="left-block-wrap pa-30">
+										<p class="block nowday"></p>
+										<span class="block nowdate"></span>
+										<div class="left-block  mt-15"></div>
+									</div>
+								</div>
+								<div class="col-xs-6 pa-0">
+									<div class="right-block-wrap pa-30">
+										<div class="right-block"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-left">
+							<h6 class="panel-title txt-dark">Latest registrations</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="table-wrap">
+								<div class="table-responsive">
+									<table class="table display product-overview" id="registrations">
+										<thead>
+											<tr>
+												<th>Full Name</th>
+												<th>Email</th>
+												<th>Phone</th>
+												<th>Address</th>
+												<th>Score</th>
+                        <th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+                      <% @registrations.each do |r| %>
+                      <tr>
+												<td><%= r.fullName %></td>
+												<td><%= r.email %></td>
+												<td><%= r.phone %></td>
+												<td><%= r.address %></td>
+												<td><%= r.potentialScore %></td>
+                        <td>
+                          <%= link_to 'Details', details_path(r) ,class: "btn btn-sm btn-primary" %>
+                          <%= link_to 'Delete', dashboard_path ,class: "btn btn-sm btn-danger" %>
+                        </td>
+											</tr>
+                      <% end %>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Row -->
 
 		<!-- Row -->
 		<div class="row">
@@ -261,125 +352,7 @@
 
 		</div>
 
-		<!-- Row -->
-		<div class="row">
-			<div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
-				<div class="panel panel-default card-view pa-0">
-					<div class="panel-wrapper collapse in">
-						<div class="panel-body pa-0">
-							<div class="sm-data-box bg-green">
-								<div class="row ma-0">
-									<div class="col-xs-5 text-center pa-0 icon-wrap-left">
-										<i class="icon-diamond txt-light"></i>
-									</div>
-									<div class="col-xs-7 text-center data-wrap-right">
-										<h6 class="txt-light">monthly sales</h6>
-										<span class="txt-light counter counter-anim">45678</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="weather_3" class="panel panel-default card-view pa-0 weather-info">
-					<div class="panel-wrapper collapse in">
-						<div class="panel-body pa-0">
-							<div class="row ma-0">
-								<div class="col-xs-6 pa-0">
-									<div class="left-block-wrap pa-30">
-										<p class="block nowday"></p>
-										<span class="block nowdate"></span>
-										<div class="left-block  mt-15"></div>
-									</div>
-								</div>
-								<div class="col-xs-6 pa-0">
-									<div class="right-block-wrap pa-30">
-										<div class="right-block"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 
-			<div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
-				<div class="panel panel-default card-view">
-					<div class="panel-heading">
-						<div class="pull-left">
-							<h6 class="panel-title txt-dark">statement table</h6>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="panel-wrapper collapse in">
-						<div class="panel-body">
-							<div class="table-wrap">
-								<div class="table-responsive">
-									<table class="table display product-overview" id="statement">
-										<thead>
-											<tr>
-												<th>date</th>
-												<th>Order ID</th>
-												<th>type</th>
-												<th>Details</th>
-												<th>price</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>10-7-2016</td>
-												<td>#85457898</td>
-												<td>
-													<span class="label label-primary font-weight-100">fee</span>
-												</td>
-												<td>
-													Author Fee for included support sale IVIP13444036
-												</td>
-												<td>$20</td>
-											</tr>
-											<tr>
-												<td>10-7-2016</td>
-												<td>#85457897</td>
-												<td>
-													<span class="label label-danger font-weight-100">refund</span>
-												</td>
-												<td>
-													Author Fee for included support sale IVIP13444036
-												</td>
-												<td>$20</td>
-											</tr>
-											<tr>
-												<td>10-7-2016</td>
-												<td>#85457896</td>
-												<td>
-													<span class="label label-primary font-weight-100">fee</span>
-												</td>
-												<td>
-													Author Fee for included support sale IVIP13444036
-												</td>
-												<td>$20</td>
-											</tr>
-											<tr>
-												<td>10-7-2016</td>
-												<td>#85457895</td>
-												<td>
-													<span class="label label-info font-weight-100">support</span>
-												</td>
-												<td>
-													Author Fee for included support sale IVIP13444036
-												</td>
-												<td>$20</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Row -->
 	</div>
 	<!-- Footer -->
 	<footer class="footer container-fluid pl-30 pr-30">
