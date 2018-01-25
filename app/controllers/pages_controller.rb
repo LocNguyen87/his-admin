@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   def login
-    debugger
   end
 
   def index

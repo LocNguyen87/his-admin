@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
 
   def new
-    debugger
     if !logged_in?
       render 'login'
     else

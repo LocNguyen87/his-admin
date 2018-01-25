@@ -11,8 +11,8 @@ class Registration < Parse::Object
   property :type, :string
   property :nation, :string
   property :hasVisa, :boolean
-  property :budget, :float
-  property :time, :string
+  property :budget, enum: [:bigBudget, :moderateBudget, :smallBudget]
+  property :time, enum: [:goThisMonth, :goNextMonth, :goOtherTime]
   property :request, :string
 
   # referrer data
@@ -33,18 +33,31 @@ class Registration < Parse::Object
   # potential score
   property :potentialScore, :float, default: lambda { |x|
     score = 0
-    score += 1 if x.hasVisa?
-    return score * (x.scrolled * x.readingTime)
+    # maximum score is 10, will be calculated base on hasVisa, budget, time, readingTime, scrolled
+    score += 2 if x.hasVisa?
+
+    score += 2 if x.bigBudget?
+    score += 1 if x.moderateBudget?
+
+    score += 2 if x.goThisMonth?
+    score += 1 if x.goNextMonth?
+
+    score += 2 if (10.0 <= x.readingTime)
+    score += 1 if x.readingTime.between?(5, 10)
+
+    score += (x.scrolled * 2 / 100)
+
+    return score
   }
 
   # See: https://github.com/modernistik/parse-stack#cloud-code-webhooks
-  # define a before save webhook for Artist
+  # define a before save webhook for Registration
   webhook :before_save do
-    artist = parse_object
+    registration = parse_object
     # perform any validations with artist
     # use `error!(msg)` to fail the save
     # ...
-    artist
+    registration
   end
 
   ## define an after save webhook for Artist
